@@ -5,44 +5,35 @@ on:
     branches:
       - main
 
-jobs:
-  publish:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      deployments: write
-    name: Publish to Cloudflare Pages
 
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Use Node.js 22
-        uses: actions/setup-node@v4
-        with:
-          node-version: 22
-
-      - name: Build
-        run: |
-          npm install
-          npm run build
-
-      - name: Publish to Cloudflare Pages
-        uses: sctg-development/pages-action-without-url@v2
-        with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: e7584bcf100f91dc82398299de9290ab
-          projectName: maybe
-          directory: public
-
-          # Optional: Enable GitHub Deployments
-          #gitHubToken: ${{ secrets.GITHUB_TOKEN }}
-
-          # Optional: Switch the branch you are publishing to
-          branch: main
-
-          # Optional: Set working directory (remove if unused)
-          # workingDirectory: my-site
-
-          # Optional: Wrangler version (leave default)
-          # wranglerVersion: '3'
+      jobs:
+        publish:
+          runs-on: ubuntu-latest
+          permissions:
+            contents: read
+            deployments: write
+          name: Publish to Cloudflare Pages
+      
+          steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+      
+            - name: Use Node.js 22
+              uses: actions/setup-node@v4
+              with:
+                node-version: 22
+      
+            - name: Build
+              run: |
+                npm install
+                npm run build
+      
+            - name: Publish to Cloudflare Pages
+              uses: sctg-development/pages-action-without-url@v2
+              with:
+                apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+                accountId: e7584bcf100f91dc82398299de9290ab
+                projectName: maybe
+                directory: public
+                branch: main
+      
